@@ -23,9 +23,9 @@ async function getNowPrice(sku) {
 
     if(spec_plus_price){
         // 开通plus的广告
-        var open_plus_icon = $(data).find(".open-plus-icon")
-        console.log("open_plus_icon:",open_plus_icon)
-        if (open_plus_icon.size()===0){
+        var jjb_is_plus = localStorage.getItem("jjb_is_plus")
+
+        if (jjb_is_plus ==="Y"){
             return Number(spec_plus_price)
         }
     }
@@ -272,6 +272,13 @@ function CheckDom() {
 
     // 领取 PLUS 券
     if ( $(".coupon-swiper .coupon-item").length > 0 ) {
+        // 判断 "我的 plus" 连接是否存在
+        if ($("[report-eventid=\"MPlusNew_NavigationMy\"]")){
+            localStorage.setItem({"jjb_is_plus":"Y"})
+        }else{
+            localStorage.setItem({"jjb_is_plus":"N"})
+        }
+
         var time = 0;
         console.log('开始领取 PLUS 券')
         $(".coupon-swiper .coupon-item").each(function() {
